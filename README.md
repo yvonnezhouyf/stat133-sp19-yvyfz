@@ -1,2 +1,1 @@
-# stat133-sp19-yvyfz
-# 1.
+#stat133-sp19-yvyfz
