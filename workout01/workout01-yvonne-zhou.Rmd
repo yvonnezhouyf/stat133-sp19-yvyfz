@@ -1,6 +1,0 @@
----
-title: "workout01-yvonne-zhou"
-author: "Yvonne Zhou"
-date: "3/10/2019"
-output: github_document
----

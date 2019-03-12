@@ -1,0 +1,46 @@
+---
+title: "workout01-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "3/10/2019"
+output: github_document
+---
+```{r}
+library(dplyr)
+global <- read.csv("../data/shots-data.csv", stringsAsFactors = FALSE)
+global <- data.frame(global, stringsAsFactors = FALSE)
+global
+```
+
+```{r out.width = '80%', echo = FALSE, fig.align = 'center'}
+knitr::include_graphics('../images/gsw-shot-charts.png')
+```
+
+```{r}
+cleaned <- select(global, shot_made_flag, shot_type, name)
+grouped <- arrange(
+                  summarise(
+                      group_by(cleaned, name), 
+                      total = last(count(cleaned, name)), 
+                      made = length(filter(cleaned, shot_made_flag == "shot_yes")),
+                      perc_made = made / total
+                      ), desc(perc_made)
+                  )
+
+
+
+```
+
+```{r}
+#last(count(cleaned, name))
+group_by(cleaned, name)
+#typeof(global)
+```
+
+```{r}
+result <- cleaned %>% group_by(name) %>% 
+                      summarize(total = last(count(cleaned, name)), 
+                                made = length(filter(cleaned, shot_made_flag == "shot_yes")),
+                                perc_made = made / total)
+result
+```
+
