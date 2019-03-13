@@ -17,30 +17,30 @@ knitr::include_graphics('../images/gsw-shot-charts.png')
 
 ```{r}
 cleaned <- select(global, shot_made_flag, shot_type, name)
-grouped <- arrange(
-                  summarise(
-                      group_by(cleaned, name), 
-                      total = last(count(cleaned, name)), 
-                      made = length(filter(cleaned, shot_made_flag == "shot_yes")),
-                      perc_made = made / total
-                      ), desc(perc_made)
-                  )
-
-
-
+two_PT <- filter(cleaned, shot_type == "2PT Field Goal")
+three_PT <- filter(cleaned, shot_type == "3PT Field Goal")
+two_grouped <- arrange(
+                        summarise(
+                                  group_by(two_PT, name), 
+                                  total = n(),
+                                  made = sum(shot_made_flag == "shot_yes"),
+                                  perc_made = made / total
+                        ), desc(perc_made)
+                )
+three_grouped <- arrange(
+                        summarise(
+                                  group_by(three_PT, name), 
+                                  total = n(),
+                                  made = sum(shot_made_flag == "shot_yes"),
+                                  perc_made = made / total
+                        ), desc(perc_made)
+                )
+full_grouped <- arrange(
+                        summarise(
+                                  group_by(cleaned, name), 
+                                  total = n(),
+                                  made = sum(shot_made_flag == "shot_yes"),
+                                  perc_made = made / total
+                        ), desc(perc_made)
+                )
 ```
-
-```{r}
-#last(count(cleaned, name))
-group_by(cleaned, name)
-#typeof(global)
-```
-
-```{r}
-result <- cleaned %>% group_by(name) %>% 
-                      summarize(total = last(count(cleaned, name)), 
-                                made = length(filter(cleaned, shot_made_flag == "shot_yes")),
-                                perc_made = made / total)
-result
-```
-
