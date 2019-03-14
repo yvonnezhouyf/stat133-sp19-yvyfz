@@ -3,17 +3,6 @@ workout01-yvonne-zhou
 Yvonne Zhou
 3/10/2019
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
 Iguodala, Green, Durant, Thompson and Curry in 2016
 ===================================================
 

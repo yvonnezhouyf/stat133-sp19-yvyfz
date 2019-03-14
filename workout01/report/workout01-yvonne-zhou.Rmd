@@ -5,8 +5,8 @@ date: "3/10/2019"
 output: github_document
 ---
 ```{r echo = FALSE}
-library(dplyr)
-library(knitr)
+library(dplyr, warn.conflicts = FALSE)
+library(knitr, warn.conflicts = FALSE)
 global <- read.csv("../data/shots-data.csv", stringsAsFactors = FALSE)
 global <- data.frame(global, stringsAsFactors = FALSE)
 #global

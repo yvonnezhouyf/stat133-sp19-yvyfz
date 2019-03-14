@@ -14,7 +14,7 @@
 library(ggplot2)
 library(jpeg)
 library(grid)
-global <- read.csv("../data/shots-data.csv", stringsAsFactors = FALSE)
+global <- read.csv("data/shots-data.csv", stringsAsFactors = FALSE)
 andre <- subset(global, name == "Andre Iguodala")
 graymond <- subset(global, name == "Graymond Green")
 kevin <- subset(global, name == "Kevin Durant")
@@ -47,7 +47,7 @@ stephen_scatterplot
 
 # short chart -------------------------------------------------------------
 
-court_file <- "../images/nba-court.jpg"
+court_file <- "images/nba-court.jpg"
 court_image <- rasterGrob(
   readJPEG(court_file),
   width = unit(1, "npc"),
@@ -60,7 +60,7 @@ andre_shot_chart <- ggplot(data = andre) +
   ylim(-50, 420) +
   ggtitle('Shot Chart: Andre Iguodala (2016 season)') +
   theme_minimal()
-ggsave(filename = "../images/andre-iguodala-shot-chart.pdf",
+ggsave(filename = "images/andre-iguodala-shot-chart.pdf",
        plot = andre_shot_chart, width = 6.5, height = 7)
 
 #graymond_shot_chart
@@ -70,7 +70,7 @@ graymond_shot_chart <- ggplot(data = graymond) +
   ylim(-50, 420) +
   ggtitle('Shot Chart: Graymond Green (2016 season)') +
   theme_minimal()
-ggsave(filename = "../images/graymond-green-shot-chart.pdf",
+ggsave(filename = "images/graymond-green-shot-chart.pdf",
        plot = graymond_shot_chart, width = 6.5, height = 7)
 
 #kevin_shot_chart
@@ -80,7 +80,7 @@ kevin_shot_chart <- ggplot(data = kevin) +
   ylim(-50, 420) +
   ggtitle('Shot Chart: Kevin Durant (2016 season)') +
   theme_minimal()
-ggsave(filename = "../images/kevin-durant-shot-chart.pdf",
+ggsave(filename = "images/kevin-durant-shot-chart.pdf",
        plot = kevin_shot_chart, width = 6.5, height = 7)
 
 #klay_shot_chart
@@ -90,7 +90,7 @@ klay_shot_chart <- ggplot(data = klay) +
   ylim(-50, 420) +
   ggtitle('Shot Chart: Klay Thompson (2016 season)') +
   theme_minimal()
-ggsave(filename = "../images/klay-thompson-shot-chart.pdf",
+ggsave(filename = "images/klay-thompson-shot-chart.pdf",
        plot = klay_shot_chart, width = 6.5, height = 7)
 
 #stephen_shot_chart
@@ -100,7 +100,7 @@ stephen_shot_chart <- ggplot(data = stephen) +
   ylim(-50, 420) +
   ggtitle('Shot Chart: Stephen Curry (2016 season)') +
   theme_minimal()
-ggsave(filename = "../images/stephen-curry-shot-chart.pdf",
+ggsave(filename = "images/stephen-curry-shot-chart.pdf",
        plot = stephen_shot_chart, width = 6.5, height = 7)
 
 
@@ -112,6 +112,6 @@ gl <- ggplot(data = global) +
   ggtitle('Shot Chart: GSW (2016 season)') +
   theme_minimal()
 gsw <- gl + facet_wrap(~name, ncol = 3)
-ggsave(filename = "../images/gsw-shot-charts.pdf", width = 8, height = 7)
-ggsave(filename = "../images/gsw-shot-charts.png", width = 8, height = 7)
+ggsave(filename = "images/gsw-shot-charts.pdf", width = 8, height = 7)
+ggsave(filename = "images/gsw-shot-charts.png", width = 8, height = 7)
 
