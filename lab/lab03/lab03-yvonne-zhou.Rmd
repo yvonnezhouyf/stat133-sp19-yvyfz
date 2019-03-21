@@ -1,0 +1,210 @@
+---
+title: "lab03-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "2/14/2019"
+output: html_document
+---
+
+> What's the character delimiter?
+Answer: ","
+
+> Is there a row for column names?
+Answer: There's no row for column names.But in the description of the data, there's information about each attributes.
+
+> Are there any missing values? If so, how are they codified?
+Answer: No. There is no missing values.
+
+> What is the data type of each column?
+Answer: They are nominal, continuous, continuous, continuous, continuous, continuous, continuous, continuous, integer.
+
+```{r}
+url <- "http://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data"
+abalone <- read.table(url, sep = ",")
+```
+
+```{r}
+abalone <- read.table("abalone.data", sep = ",")
+
+# take a peek of first rows
+head(abalone)
+
+# take a peek of last rows
+tail(abalone)
+
+# check data frame's structure
+str(abalone, vec.len = 1)
+```
+```{r}
+column_names <- c("Sex", "Length", "Diameter", "Height", "Whole", "Shucked", "Viscera", "Shell", "Rings")
+column_types <- c("character", "real", "real", "real", "real", "real", "real", "real", "integer")
+
+abalone = read.table("abalone.data", sep = ",", col.names = column_names, colClasses = column_types)
+head(abalone)
+str(abalone)
+```
+
+```{r}
+abalone2 = read.csv("abalone.data", sep = ",")
+head(abalone2)
+str(abalone2)
+```
+
+```{r}
+abalone10 = read.table("abalone.data", sep = ",", col.names = column_names, colClasses = column_types, nrows = 10)
+head(abalone10)
+str(abalone)
+```
+
+```{r}
+abalone20 = read.table("abalone.data", sep = ",", col.names = column_names, colClasses = column_types, nrows = 10, skip = 10)
+head(abalone20)
+str(abalone)
+```
+> Read the documentation of read.table() about the argument colClasses. What happens when you specify the data-type of one or more columns as "NULL"? 
+Answer: That column will be skipped.
+
+```{r}
+str(abalone)
+summary(abalone)
+head(abalone)
+tail(abalone)
+dim(abalone)
+names(abalone)
+colnames(abalone)
+nrow(abalone)
+ncol(abalone)
+```
+
+```{r}
+use = abalone[-1]
+a <- apply(use, 2, min)
+a
+b <- apply(use, 2, max)
+b
+c <- apply(use, 2, mean)
+c
+d <- apply(use, 2, sd)
+d
+```
+
+```{r}
+# first three rows
+three_rows <- abalone[1:3, ]
+three_rows
+```
+
+```{r}
+# subset rows given a condition
+# (length greater than 0.6)
+gt <- abalone[abalone$Length > 0.6, ]
+head(gt)
+```
+
+```{r}
+length_diam <- abalone[ ,c('Length', 'Diameter')]
+head(length_diam)
+```
+
+```{r}
+five_rows <- abalone[1:5, ]
+five_rows
+```
+
+```{r}
+per_five_rows <- abalone[seq(1, nrow(abalone), by=5), ]
+head(per_five_rows)
+```
+
+```{r}
+last_five_rows <- abalone[seq(nrow(abalone) - 4, nrow(abalone), by=1), ]
+last_five_rows
+```
+
+```{r}
+height14 <- abalone[abalone$Height < 0.14, ]
+head(height14)
+```
+
+```{r}
+infant <- abalone[abalone$Sex == "I", ]
+dim(infant)
+```
+```{r}
+male_female <- abalone[(abalone$Sex == "M" | abalone$Sex == "F"), ]
+dim(male_female)
+```
+
+```{r}
+filter1 <- abalone[abalone$Rings > 25, c('Sex', 'Rings')]
+filter1
+```
+
+```{r}
+filter2 <- abalone[(abalone$Rings > 3 & abalone$Rings < 6), c('Sex', 'Rings', 'Diameter')]
+head(filter2)
+```
+```{r}
+# creating a small data frame
+abies <- abalone[abalone$Sex == 'I', c('Length', 'Height', 'Diameter')]
+abies$Ht_Len <- abies$Height / abies$Length
+abies2 <- abies[order(abies$Length, decreasing = TRUE), ]
+head(abies)
+```
+
+```{r}
+babies <- abalone[abalone$Sex == 'I', ]
+head(babies)
+abies$product <- babies$Whole * babies$Shucked
+abies3 = abies
+abies3$log_height <- log(babies$Height)
+abies3$log_length <- log(babies$Length)
+head(abies)
+head(abies3)
+```
+```{r}
+filtered_abalone <- abalone[abalone$Height < 0.12, ]
+#filtered_abalone
+filtered_and_ordered_abalone <- 
+  filtered_abalone[order(filtered_abalone$Height, decreasing = FALSE),]
+head(filtered_and_ordered_abalone)
+```
+
+```{r}
+highest_abalone <- abalone[order(abalone$Height, decreasing = TRUE), ]
+top_five_highest_abalone <- highest_abalone[1:5, c('Sex', 'Diameter', 'Rings')]
+top_five_highest_abalone
+
+longest_abalone <- abalone[order(abalone$Length, decreasing = TRUE), ]
+top_five_longest_abalone <- longest_abalone[1:5, c('Sex', 'Diameter', 'Rings')]
+top_five_longest_abalone
+```
+
+```{r}
+table_sex <- table(abalone$Sex)
+barplot(table_sex)
+
+hist(abalone$Diameter)
+boxplot(abalone$Diameter, horizontal = TRUE)
+```
+
+```{r}
+plot(abalone$Height)
+#plot(abalone$Sex) #Error
+plot(abalone$Height, abalone$Length)
+#plot(abalone$Height, abalone$Length, abalone$Diameter) #Error
+#plot(abalone$Sex, abalone$Length) #Error
+#plot(abalone$Length, abalone$Sex) #Error
+#Could only plot numeric vectors
+```
+
+```{r}
+plot.default(-5:5, -5:5, type = "p")
+points(0, 1, pch = 2)
+points(0, 2, col = "blue")
+points(0, 3, cex = 0.5)
+plot.default(0, 1, xlab = "x-axis")
+plot.default(0, 1, ylab = "y-axis")
+plot.default(0, 1, main = "diagram")
+plot.default(0, 1, sub = "021419")
+```
+

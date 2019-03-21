@@ -1,0 +1,164 @@
+---
+title: "lab04-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "2/20/2019"
+output: html_document
+---
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+# with "base" read.csv()
+dat <- read.csv('nba2018-players.csv', stringsAsFactors = FALSE)
+```
+
+```{r}
+first_five_rows <- slice(dat, 1:5)
+first_five_rows
+```
+
+```{r}
+per_five_rows <- slice(dat, seq(10, 50, 5))
+per_five_rows
+```
+
+```{r}
+last_five_rows <- slice(dat, seq(length(dat$player) - 4, length(dat$player), 1))
+last_five_rows
+```
+
+```{r}
+height_smaller_than_70 <- filter(dat, height < 70)
+height_smaller_than_70
+```
+
+```{r}
+GSW_row <- filter(dat, team == "GSW")
+head(GSW_row)
+```
+
+```{r}
+GSW_center <- filter(GSW_row, position == "C")
+GSW_center
+```
+
+```{r}
+lakers_players <- filter(dat, team == "LAL")
+lakers_names <- select(lakers_players, player)
+lakers_names
+```
+
+```{r}
+gsw_players <- filter(dat, team == "GSW")
+gsw_PG <- filter(dat, position == "PG")
+gsw_names <- select(gsw_PG, player, salary)
+head(gsw_names)
+```
+
+```{r}
+more_than_10_experience <- filter(dat, experience > 10)
+salary_low <- filter(more_than_10_experience, salary <= 10000000)
+result1 <- select(salary_low, player, age, team)
+head(result1)
+```
+
+```{r}
+rookie <- filter(dat, age < 20)
+result2 <- select(rookie, player, team, height, weight)
+result2
+```
+
+```{r}
+gsw <- filter(dat, team == 'GSW')
+gsw <- select(gsw, player, height, weight)
+gsw <- slice(gsw, c(4, 8, 10, 14, 15))
+gsw
+```
+
+```{r}
+gsw <- mutate(gsw, product = height * weight)
+gsw
+```
+
+```{r}
+gsw3 <- gsw
+gsw3 <- mutate(gsw3, log_height = log(height), log_weight = log(weight))
+gsw3
+```
+
+```{r}
+less_71 <- filter(dat, height < 71)
+increasing_less_71 <- arrange(less_71, height)
+increasing_less_71
+```
+
+```{r}
+high_salary <- arrange(dat, desc(salary))
+top_five_salary <- slice(high_salary, 1:5)
+result3 <- select(top_five_salary, player, team, salary)
+result3
+```
+
+```{r}
+high_point <- arrange(dat, desc(points3))
+top_ten_point <- slice(high_point, 1:10)
+result4 <- select(top_ten_point, player, team, points3)
+result4
+```
+
+```{r}
+min_per_game_df <- mutate(dat, min_per_game = minutes / games)
+min_per_game_df_sorted <- arrange(min_per_game_df, desc(min_per_game))
+result5 <- select(min_per_game_df_sorted, player, experience, min_per_game)
+head(result5)
+```
+
+```{r}
+ggplot(data = gsw) +
+  geom_point(aes(x = height, y = weight))
+```
+
+```{r}
+ggplot(data = gsw) +
+  geom_point(aes(x = height, y = weight)) + 
+  geom_text(aes(x = height, y = weight, label = player), nudge_x = 1, nudge_y = 1, check_overlap = TRUE)
+```
+
+```{r}
+warrior <- filter(dat, team == "GSW")
+ggplot(data = warrior) +
+  geom_point(aes(x = height, y = weight)) + 
+  geom_label(aes(x = height, y = weight, label = player), nudge_x = 1, nudge_y = 1)
+```
+
+```{r}
+ggplot(data = dat, aes(x = salary)) +
+  geom_density(kernel = "gaussian")
+```
+
+```{r}
+ggplot(data = dat, aes(x = points2)) +
+  geom_histogram(binwidth = 50)
+```
+
+```{r}
+ggplot(data = dat, aes(x = position)) +
+  geom_bar()
+```
+
+```{r}
+centers <- filter(dat, position == "C")
+ggplot(data = centers, aes(x = experience, y = salary)) +
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+```{r}
+centers <- filter(dat, position == "C")
+ggplot(data = centers, aes(x = experience, y = salary)) +
+  geom_point() +
+  geom_smooth(method = loess)
+```
+

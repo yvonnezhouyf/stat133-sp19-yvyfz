@@ -1,0 +1,171 @@
+---
+title: "lab07-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "3/14/2019"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
+#Area of a circle
+```{r}
+circle_area <- function(radius = 1) {
+  if (radius < 0) {
+    stop("radius cannot be negative")
+  }
+  area <- pi * radius^2
+  return(area)
+}
+```
+
+```{r}
+# default (radius 1)
+circle_area()
+
+# radius 3
+circle_area(radius = 3)
+
+# bad radius
+circle_area(radius = -2)
+```
+
+#Surface area of a cylinder
+```{r}
+cylinder_area <- function(radius = 1, height = 1) {
+  if (radius < 0) {
+    stop("radius cannot be negative")
+  }
+  if (height < 0) {
+    stop("height cannot be negative")
+  }
+  area <- 2 * pi * radius * height + 2 * pi * radius^2
+  return(area)
+}
+```
+
+```{r}
+# default (radius 1, height 1)
+cylinder_area()
+
+# radius 2, height 3
+cylinder_area(radius = 2, height = 3)
+
+# bad radius
+cylinder_area(radius = -2, height = 1)
+
+# bad height
+cylinder_area(radius = 2, height = -1)
+
+# bad radius and height
+cylinder_area(radius = -2, height = -1)
+```
+
+#Volume of a cylinder
+```{r}
+cylinder_volume <- function(radius = 1, height = 1) {
+  if (radius < 0) {
+    stop("radius cannot be negative")
+  }
+  if (height < 0) {
+    stop("height cannot be negative")
+  }
+  volume <- circle_area(radius) * height
+  return(volume)
+}
+```
+
+```{r}
+# default (radius 1, height 1)
+cylinder_volume()
+
+cylinder_volume(radius = 3, height = 10)
+cylinder_volume(height = 10, radius = 3)
+```
+
+#Even number
+```{r}
+is_even <- function(number) {
+  if (is.character(number)) {
+    return(NA)
+  } else if (number %% 2 == 0) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+```
+
+```{r}
+# even number
+is_even(10)
+
+# odd number
+is_even(33)
+
+# not a number
+is_even('a')
+
+```
+
+#Odd number
+```{r}
+is_odd <- function(number) {
+  if (is.character(number)) {
+    return(NA)
+  } else if (is_even(number)) {
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }
+}
+```
+
+```{r}
+# odd number
+is_odd(1)
+
+# even number
+is_odd(4)
+
+# not a number
+is_odd('a')
+```
+#a grading function
+```{r}
+grade <- function(score) {
+  if (score > 100 | score < 0) {
+    stop("score must be a number between 0 and 100")
+  } else if (score < 100 & score >= 90) {
+    return("A")
+  } else if (score < 90 & score >= 80) {
+    return("B")
+  } else if (score < 80 & score >= 70) {
+    return("C")
+  } else if (score < 70 & score >= 60) {
+    return("D")
+  } else {
+    return("F")
+  }
+}
+
+```
+
+```{r}
+# grade "A"
+grade(score = 90)
+
+# grade "B"
+grade(score = 89.9999)
+
+# grade "C"
+grade(score = 70.0000001)
+
+# grade "F"
+grade(score = 50)
+```
+
+```{r}
+
+```
+

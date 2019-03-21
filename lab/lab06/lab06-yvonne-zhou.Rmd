@@ -1,0 +1,90 @@
+---
+title: "lab06-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "3/7/2019"
+output: html_document
+---
+#1)
+```{r eval = FALSE}
+cd ~/Desktop
+mkdir planets
+cd planets
+git init
+ls
+ls -a
+git status
+cd ~/Desktop
+cd planets
+ls -a
+mkdir moons
+cd moons
+git init
+ls -a  
+git config --global user.name "Yvonne Zhou"
+git config --global user.email "yvonnezhouyf@berkeley.edu"
+git config --global core.autocrlf input
+git config --global core.autocrlf true
+pwd
+cd ..
+nano mars.txt
+ls
+cat mars.txt
+git status
+git add mars.txt
+git status
+git commit -m "Start notes on Mars as a base"
+git status
+git log
+git diff
+git commit -m "Add concerns about effects of Mars' moons on Wolfman"
+git status
+git add mars.txt
+git commit -m "Add concerns about effects of Mars' moons on Wolfman"
+```
+
+#2)
+```{r eval = FALSE}
+echo "# stat133-sp19-yvyfz" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/yvonnezhouyf/stat133-sp19-yvyfz.git
+git push -u origin master
+
+https://github.com/yvonnezhouyf/stat133-sp19-yvyfz.git
+```
+
+#3)
+```{r eval = FALSE}
+cd ~/Desktop/Berkeley/stat133
+mkdir stat133-sp19-yvyfz
+cd stat133-sp19-yvyfz
+git init
+```
+
+#4)
+```{r eval = FALSE}
+echo "# stat133-sp19-yvyfz" >> README.md
+git status
+git add README.md
+git sys.status(git commit -m "first commit")
+```
+
+#5)
+```{r eval = FALSE}
+git remote add origin https://github.com/yvonnezhouyf/stat133-sp19-yvyfz.git
+git remote -v
+```
+
+#6)
+```{r eval = FALSE}
+git status
+git push origin master
+
+echo "# 1." >> README.md
+git status
+git add README.md
+git commit -m "1. added"
+git push origin master
+```
+

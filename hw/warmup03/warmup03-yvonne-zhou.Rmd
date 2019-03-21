@@ -1,0 +1,190 @@
+---
+title: "warmup03-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "2/15/2019"
+output: html_document
+---
+
+#Importing Data
+> Do the data have a header containing the variable names?
+Answer: Yes. There is a header containing the variable names.
+
+> Are the values for an observation separated by a comma, blank, or tab?
+Answer: Yes, the values for an observation are separated by a comma.
+
+> Are there any missing values? If so, how are they codified?
+Answer: Yes, there are missing values, and they are codified as "".
+
+```{r}
+head(read.table("https://raw.githubusercontent.com/ucb-stat133/stat133-hws/master/data/nba2018-players.csv", sep = ",", col.names = c("player","team","position","height","weight","age","experience","college","salary","games","minutes","points","points3","points2","points1"), skip = 1))
+head(read.csv("https://raw.githubusercontent.com/ucb-stat133/stat133-hws/master/data/nba2018-players.csv", sep = ","))
+```
+
+```{r}
+# assembling url so it fits on the screen
+github <- 'https://raw.githubusercontent.com/ucb-stat133/stat133-hws/'
+repo <- 'master/data/nba2018-players.csv'
+datafile <- paste0(github, repo)
+head(read.table(datafile, sep = ",", col.names = c("player","team","position","height","weight","age","experience","college","salary","games","minutes","points","points3","points2","points1"), skip = 1))
+head(read.csv(datafile, sep = ","))
+```
+
+```{r}
+data_types <- c("character", "factor", "factor", "integer", "integer", "integer", "integer", "character", "double", "integer", "integer", "integer", "integer", "integer", "integer")
+```
+
+```{r}
+nba <- read.csv(datafile, sep = ",", colClasses = data_types)
+str(nba, vec.len = 1)
+```
+
+```{r}
+nba2 <- read.table(datafile, sep = ",", col.names = c("player","team","position","height","weight","age","experience","college","salary","games","minutes","points","points3","points2","points1"), colClasses = data_types, skip = 1)
+str(nba2, vec.len = 1)
+```
+
+```{r}
+identical(nba, nba2)
+```
+
+#Technical Questions about importing data
+> What happens to the column names of the imported data when you invoke read.csv(datafile, header = FALSE, nrows = 10)?
+Answer: The column names of the imported data would be processed as a row.
+
+> What happens to the data types of the columns when you invoke read.csv(datafile, header = FALSE, nrows = 10)?
+Answer: The data types of the columns would all be set to be factors.
+
+> Why does the command read.table(datafile, nrows = 10) fall to import the data?
+Answer: The character delimiter is not passed in the function.
+
+> Say you import nba2018-players.csv in two different ways. In the first option you
+import the data without specifying the data type of each column. In the second option
+you do specify the data types as in data_types. You may wonder whether both options
+return a data frame of the same memory size. You can actually use the function
+object.size() that provides an estimate of the memory that is being used to store an
+R object. What data importing function returns the smallest data frame (in terms of
+memory size)?
+Answer: The second data importing function returns the smallest data frame in term of memory size. This is because when importing the function has one parameter to deal with.
+
+> Say the object nba is the data frame produced when importing nba2018-players.csv. If you invoke as.matrix(nba), what happens to the data values of this matrix?
+Answer: The values of the matrix are transformed into character.
+
+#Examine Salary
+```{r}
+summary(nba$salary)
+```
+
+```{r}
+hist(nba$salary, main = "Histogram of NBA Players' Salary", xlab = "Salary(dollar)")
+```
+
+```{r}
+nba$salary2 <- nba$salary / 1000000
+hist(nba$salary2, main = "Histogram of NBA Players' Salary", xlab = "Salary(million dollar)")
+```
+
+```{r}
+hist(log(nba$salary2), main = "Histogram of NBA Players' Salary", xlab = "Logged Salary(million dollar)")
+#The log transformation make the salary2 distribution more symmetric. The rest of the distribution are high comparing to the small values on the left. This histogram is not symmetric, skewed left, and it is not uniform.
+```
+
+```{r}
+low <- c(log(nba$salary2) < -3)
+length(which(low))
+```
+
+```{r}
+nba$lsalary <- low
+nbadf <- nba[nba$lsalary == TRUE, c("player", "weight", "height", "team", "position")]
+nbadf
+```
+
+```{r}
+nba <- nba[nba$lsalary == FALSE, ]
+dim(nba)
+```
+
+#Explore Points
+```{r}
+hist(nba$points, main = "Histogram of NBA Players' Points", xlab = "Points")
+```
+
+```{r}
+nba$points[nba$points == 0] <- 0.1
+hist(log(nba$points), main = "Histogram of NBA Players' Points", xlab = "Logged Points")
+#The log transformation make the points distribution more symmetric. This histogram is not symmetric, skewed left, and it is not uniform. The histogram shows that more players have higher logged points.
+```
+
+#Transforming Age into a Factor
+```{r}
+boxplot(salary2 ~ age, data = nba,
+xlab = "Age", ylab = "Salary (in millions)")
+#There seems to be a difference in salaries depending on the age of the players.
+```
+
+```{r}
+boxplot(points ~ age, data = nba,
+xlab = "Age", ylab = "Points")
+#There does not seems to be a large difference in points depending on the age of the players.
+```
+
+```{r}
+age2 <- c(nba$age)
+age2 <- replace(age2, age2 < 20, 20)
+age2 <- cut(age2, breaks = c(19, 25, 30, Inf), labels = c("20-24", "25-29", "30+"))
+age2
+```
+
+```{r}
+summary.factor(age2)
+```
+
+#Plotting Salary against Points, by Age Group
+```{r}
+palette1 <- c("#D4D62A", "#4F9D66", "#9575AB")
+vector_age <- as.character(age2)
+age_colors <- replace(vector_age, (vector_age == "20-24"), "#D4D62A")
+age_colors <- replace(age_colors, (vector_age == "25-29"), "#4F9D66")
+age_colors <- replace(age_colors, (vector_age == "30+"), "#9575AB")
+age_colors
+```
+
+```{r}
+plot(salary ~ points, data = nba, log = "xy", main = "",
+xlab = "Points (log scale)", ylab = "Salary (log $)",
+col = age_colors, pch = 19, cex = 0.6)
+legend("bottomright", fill = palette1, legend = levels(age2),
+title = "Age Groups", cex = 0.8)
+```
+
+#Plotting Salary against Points, by Position
+```{r}
+boxplot(salary2 ~ position, data = nba,
+xlab = "Position", ylab = "Salary (in millions)")
+#It seems to be a difference in salaries depending on the position of the players.
+```
+
+```{r}
+boxplot(points ~ position, data = nba,
+xlab = "Position", ylab = "Points")
+#It seems to be a difference in scored points depending on the position of the players.
+```
+
+```{r}
+palette2 <- c("#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854")
+vector_position <- as.character(nba$position)
+pos_colors <- replace(vector_position, (vector_position == "C"), "#66c2a5")
+pos_colors <- replace(pos_colors, (vector_position == "PF"), "#fc8d62")
+pos_colors <- replace(pos_colors, (vector_position == "PG"), "#8da0cb")
+pos_colors <- replace(pos_colors, (vector_position == "SF"), "#e78ac3")
+pos_colors <- replace(pos_colors, (vector_position == "SG"), "#a6d854")
+#pos_colors
+
+plot(salary ~ points, data = nba, log = "xy", main = "",
+xlab = "Points", ylab = "Salary (log $)",
+col = pos_colors, pch = 19, cex = 0.6)
+
+legend("bottomright", fill = palette2, legend = levels(nba$position),
+title = "Position Groups", cex = 0.8)
+````
+

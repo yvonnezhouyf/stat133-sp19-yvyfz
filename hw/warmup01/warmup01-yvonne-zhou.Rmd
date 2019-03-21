@@ -1,0 +1,102 @@
+---
+title: "warmup01-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "1/30/2019"
+output: html_document
+---
+#Star War
+####Freya Fenris
+> We'll have to bring her in manually. Follow my signal.
+
+![Freya Fenris](https://vignette.wikia.nocookie.net/starwars/images/4/43/SWResistance-FreyaFenris.jpg/revision/latest?cb=20180914204850)
+
+Description  | Value
+------------ | -------------
+Species      | Human
+Gender       | Female
+Eye Color    | Blue
+Skin Color   | Light
+
+#Cooking Recipe
+###Baked Buffalo Wings
+![Baked Buffalo Wings](https://smittenkitchendotcom.files.wordpress.com/2019/01/oven-baked-buffalo-wings.jpg?w=750)
+
+#####Ingredients
+* 1 to 4 pounds chicken wings that have been cut into flats and drumettes
+* 1 1/2 teaspoons to 2 tablespoons baking powder (using 1 1/2 teaspoons per pound)
+* 1 to 4 teaspoons kosher salt (using 1 teaspoon per pound; use less salt if you’re not using Diamond brand)
+* 2 tablespoons hot sauce (Frank’s RedHot is traditional) per pound of wings
+* 1 1/2 to 2 tablespoons unsalted butter per pound of wings
+* To serve (optional): Homemade Blue Cheese Dressing (below), plus celery and carrot sticks
+
+#####Special Kitchen tools
+* refrigerator
+* oven
+
+#####Steps
+* Line a large baking sheet with foil and set an oven-safe cooling rack on top. I lightly coat mine with nonstick spray, but it’s probably not necessary.
+* Pat wings dry with a paper towel, and then, in a large bowl, toss them with 1 1/2 teaspoons baking powder and 1 teaspoon kosher salt per pound of wings, until thoroughly coated. Arrange them on the rack with some space between them (the surface will not dry and crisp as well where they touch) and place in your refrigerator uncovered for 8 to 24 hours.
+* When you’re ready to bake them, heat your oven to 450 degrees, with a rack set in the top half of your oven. Bake your wings for 20 minutes, flip them with tongs or a spatula, bake them for another 15 minutes, flip them back over again, and then for 15 final minutes, for a total roasting time of 50 minutes. You might need up to 5 minutes longer for larger wings. Wings are done with they are browned and crisp.
+* While the wings roast, make Buffalo wing sauce. In a medium saucepan, for each pound of wings, combine 2 tablespoons of hot sauce and 1 1/2 tablespoons (for a hotter sauce) to 2 tablespoons (for a mild, more buttery sauce) unsalted butter over medium heat until melted, whisking to combine. Set aside. Make Blue Cheese Dressing, if you wish (recipe below) and prepare carrots and celery.
+* When wings are done, roll each in prepared Buffalo wing sauce. Serve with fixings of your choice. Eat immediately.
+
+> There's no special season of the year for this.
+
+#####Ingredients of the Blue Cheese Dressing for the wings
+* 1/3 cup well-shaken buttermilk
+* 1/3 cup mayonnaise
+* 1/3 cup sour cream
+* Juice of half a lemon
+* 2 teaspoons white vinegar
+* 1 small garlic clove, minced
+* Salt and freshly ground black pepper
+* 4 ounces crumbled, firm blue cheese (about 1 cup)
+* 2 tablespoons finely chopped fresh chives
+
+#####Steps of the Blue Cheese Dressing for the wings
+* Combine all ingredients in a bowl and stir until combined, but cheese is still lumpy. Season well with salt and pepper. Dressing keeps refrigerated for 5 to 6 days.
+
+
+
+#Euclidean Distance
+The \(\boldsymbol{Euclidean}\) \(\boldsymbol{distance}\) between points \(\boldsymbol{p}\) and \(\boldsymbol{q}\) is the length of the line segment connecting them (\(\bar{pq}\)).
+In Cartesian coordinates, if \(p = (p_1, p_2,..., p_n)\) and \(q = (q_1, q_2,..., q_n)\) are two points in Euclidean n-space, then the distance (d) from \(\boldsymbol{p}\) to \(\boldsymbol{q}\), or from \(\boldsymbol{q}\) to \(\boldsymbol{p}\) is given by the Pythagorean formula:
+\[d(\boldsymbol{p},\boldsymbol{q}) = d(\boldsymbol{q},\boldsymbol{p}) = \sqrt{(q_1 - p_1)^2 + (q_2 - p_2)^2} + \dots + (q_n - p_n)^2 = \sqrt{\sum_{i = 1}^{n} (q_i - p_i)^2}\]
+The position of a point in a Euclidean n-space is a Euclidean vector. So, \(\boldsymbol{p}\) and \(\boldsymbol{q}\) may be represented as Euclidean vectors, starting from the origin of the space (initial point) with their tips (terminal points) ending at the two points. The Euclidean norm, or Euclidean length, or magnitude of a vector measures the length of the vector:
+\[||\boldsymbol{p}|| = \sqrt{p_1^2 + p_2^2 + \dots + p_n^2} = \sqrt{\boldsymbol{p} * \boldsymbol{p}}\]
+where the last expression involves the dot product.
+Describing a vector as a directed line segment from the origin of the Euclidean space (vector tail), to a point in that space (vector tip), its length is actually the distance from its tail to its tip. The Euclidean norm of a vector is seen to be just the Euclidean distance between its tail and its tip.
+The relationship between points \(\boldsymbol{p}\) and \(\boldsymbol{q}\) may involve a direction (for example, from \(\boldsymbol{p}\) to \(\boldsymbol{q}\)), so when it does, this relationship can itself be represented by a vector, given by
+\[\boldsymbol{q} - \boldsymbol{p} = (q_1 - p_1, q_2 - p_2, \dots, q_n - p_n\]
+In a two- or three-dimensional space (n = 2, 3), this can be visually represented as an arrow from \(\boldsymbol{p}\) to \(\boldsymbol{q}\). In any space it can be regarded as the position of \(\boldsymbol{q}\) relative to \(\boldsymbol{p}\). It may also be called a displacement vector if \(\boldsymbol{p}\) and \(\boldsymbol{q}\) represent two positions of some moving point.
+The Euclidean distance between p and q is just the Euclidean length of this displacement vector:
+\[||\boldsymbol{q} - \boldsymbol{p}|| = \sqrt{(\boldsymbol{q} - \boldsymbol{p}) * (\boldsymbol{q} - \boldsymbol{p})}\]
+which is equivalent to equation 1, and also to 
+\[||\boldsymbol{q} - \boldsymbol{p}|| = \sqrt{||\boldsymbol{p}||^2 + ||\boldsymbol{p}||^2 - 2\boldsymbol{p} * \boldsymbol{q}}\]
+
+###One dimension
+In the context of Euclidean geometry, a metric is established in one dimension by fixing two points on a line, and choosing one to be the origin. The length of the line segment between these points defines the unit of distance and the direction from the origin to the second point is defined as the positive direction. This line segment may be translated along the line to build longer segments whose lengths correspond to multiples of the unit distance. In this manner real numbers can be associated to points on the line (as the distance from the origin to the point) and these are the Cartesian coordinates of the points on what may now be called the real line. As an alternate way to establish the metric, instead of choosing two points on the line, choose one point to be the origin, a unit of length and a direction along the line to call positive. The second point is then uniquely determined as the point on the line that is at a distance of one positive unit from the origin.
+The distance between any two points on the real line is the absolute value of the numerical difference of their coordinates. It is common to identify the name of a point with its Cartesian coordinate. Thus if p and q are two points on the real line, then the distance between them is given by:
+\[\sqrt{(q - p)^2} = |q - p|\]
+In one dimension, there is a single homogeneous, translation-invariant metric (in other words, a distance that is induced by a norm), up to a scale factor of length, which is the Euclidean distance. In higher dimensions there are other possible norms.
+
+###Two dimensions
+In the Euclidean plane, if \(\boldsymbol{p} = (p_1, p_2)\) and \(\boldsymbol{q} = (q_1, q_2)\) then the distance is given by
+\[d(\boldsymbol{p}, \boldsymbol{q}) = \sqrt{(q_1 - p_1)^2 + (q_2 - p_2)^2}\]
+This is equivalent to the Pythagorean theorem.
+Alternatively, it follows from (2) that if the polar coordinates of the point \(\boldsymbol{p}\) are \((r_1, \theta_1)\) and those of \(\boldsymbol{q}\) are \((r_2, \theta_2)\), then the distance between the points is
+\[\sqrt{r_1^2 + r_2^2 - 2r_1r_2\cos(\theta_1 - \theta_2)}\]
+
+###Three dimensions
+In three-dimensional Euclidean space, the distance is
+\[d(\boldsymbol{p}, \boldsymbol{q}) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + (p_3 - q_3)^2}\]
+
+###n dimensions
+In general, for an n-dimensional space, the distance is
+\[d(\boldsymbol{p}, \boldsymbol{q}) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \dots +  (p_i - q_i)^2 + \dots +  (p_n - q_n)^2}\]
+
+###Squared Euclidean distance
+The standard Euclidean distance can be squared in order to place progressively greater weight on objects that are farther apart. In this case, the equation becomes
+\[d^2(\boldsymbol{p}, \boldsymbol{q}) = (p_1 - q_1)^2 + (p_2 - q_2)^2 + \dots +  (p_i - q_i)^2 + \dots +  (p_n - q_n)^2\]
+Squared Euclidean distance is not a metric, as it does not satisfy the triangle inequality; however, it is frequently used in optimization problems in which distances only have to be compared.
+It is also referred to as quadrance within the field of rational trigonometry.

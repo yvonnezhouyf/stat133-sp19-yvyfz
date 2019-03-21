@@ -1,0 +1,72 @@
+---
+title: "lab01-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "1/31/2019"
+output: html_document
+---
+
+```{r}
+phone <- 80
+transportation <- 20
+groceries <- 527
+gym <- 10
+rent <- 1500
+other <- 83
+
+total <-  transportation + groceries + gym + rent + other
+semester <- total * 5
+year <- total * 10
+
+expenses <- c(phone, transportation, groceries, gym, rent, other)
+
+names(expenses) <- c("phone", "transportation", "groceries", "gym", "rent", "other")
+
+sorted <- sort(expenses, decreasing = TRUE)
+pic <- barplot(sorted)
+text(x = pic, y = sorted, label = sorted, pos = 3, cex = 0.8, col = "black")
+```
+
+```{r}
+a <- 3
+b <- 4
+c <- sqrt(a**2 + b **2)
+c
+
+choose(n = 5, k = 2)
+
+factorial(4)
+
+n <- 5
+k <- 2
+p <- 1/2
+
+num_comb <- factorial(n) / ((factorial(k) * factorial(n - k)))
+prob_factorial <- num_comb * (p ** k) * (1 - p)**(n - k)
+prob_factorial
+
+prob_choose <- choose(n, k) * (p ** k) * (1 - p)**(n - k)
+prob_choose
+
+dice_n <- 10
+dice_k <- 6
+dice_p <- 1/6
+
+prob_dice_choose <- choose(dice_n, dice_k) * (dice_p ** dice_k) * (1 - dice_p)**(dice_n - dice_k)
+prob_dice_choose
+
+prob_coin <- dbinom(k, n, p, log = FALSE)
+prob_coin
+
+prob_dice <- dbinom(dice_k, dice_n, dice_p, log = FALSE)
+prob_dice
+
+prob_dice_biased <- dbinom(dice_k, dice_n, 0.35, log = FALSE)
+prob_dice_biased
+
+prob_coin_more_than_3 <- dbinom(k, 4, 0.35, log = FALSE) + dbinom(k, 5, 0.35, log = FALSE)
+```
+
+```{r}
+library(knitr)
+```
+

@@ -1,0 +1,136 @@
+---
+title: "warmup04-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "2/24/2019"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+#Importing Data
+```{r}
+# assembling url so it fits on the screen
+github <- 'https://raw.githubusercontent.com/ucb-stat133/stat133-hws/'
+repo <- 'master/data/nba2018-players.csv'
+datafile <- paste0(github, repo)
+
+dat <- read_csv(datafile, col_names = TRUE, 
+          col_types = cols(
+              player = col_character(),
+              team = col_character(),
+              position = col_factor(),
+              height = col_integer(),
+              weight = col_integer(),
+              age = col_integer(),
+              experience = col_integer(),
+              college = col_character(),
+              salary = col_double(),
+              games = col_integer(),
+              minutes = col_integer(),
+              points = col_integer(),
+              points3 = col_integer(),
+              points2 = col_integer(),
+              points1 = col_integer()
+          )
+)
+summary(dat)
+```
+
+```{r}
+class(dat)
+```
+
+#Technical Questions about "readr"
+```{r}
+dat
+```
+
+```{r}
+# The main differences between data.frame and tibble are printing and subletting. Tibble is a more modern version of data frame, so except the priting and subletting, data.frame and tibble are about the same.
+```
+
+```{r}
+# It is not possible to only import only some columns using read_csv(), but it is possible that, after import the whole table, select some of the columns in the table so that the table would only contain the columns wanted.
+```
+
+```{r}
+# "header" has similar meaning with "col_names" when "col_names" is a boolean value, and "col_names" can also be similar to "col.names" when "col_names" is a vector; "na.strings" is similar to "na"; "colClasses" is similar to "col_types".
+```
+
+#Salaries by Team
+```{r}
+team_salaries <- summarise(group_by(dat, team), total_salary = sum(salary)/1000000, mean_salary = mean(salary)/1000000, median_salary = median(salary)/1000000)
+team_salaries <- arrange(team_salaries, desc(total_salary))
+team_salaries
+```
+
+```{r}
+as.data.frame(team_salaries)
+```
+
+```{r}
+ggplot(team_salaries, aes(x = reorder(team, total_salary), y = total_salary)) +
+  geom_bar(stat='identity') +
+  labs(x = "Team", y = "Total Salary(in millions)", title = "NBA Teams Ranked by Total Salary") +
+  geom_hline(aes(yintercept = mean(total_salary))) +
+  coord_flip()
+```
+
+#Points by Team
+```{r}
+team_points <- summarise(group_by(dat, team), total_points = sum(points), mean_points = mean(points), median_points = median(points))
+team_points <- arrange(team_points, desc(total_points))
+team_points
+```
+
+```{r}
+as.data.frame(team_points)
+```
+
+```{r}
+ggplot(team_points, aes(x = reorder(team, total_points), y = total_points)) +
+  geom_bar(stat='identity') +
+  labs(x = "Team", y = "Total Scored Points", title = "NBA Teams Ranked by Total Scored Points") +
+  geom_hline(aes(yintercept = mean(total_points))) +
+  coord_flip()
+```
+
+#Cost of Scored Points
+```{r}
+points_salary <-  full_join(team_salaries, team_points, by = "team")
+points_salary
+```
+
+```{r}
+summary(points_salary)
+```
+
+```{r}
+points_salary <- mutate(points_salary, cost_point = total_salary * 1000000 / total_points)
+points_salary
+```
+
+```{r}
+summary(points_salary$cost_point)
+```
+
+```{r}
+ggplot(points_salary, aes(x = team, y = cost_point)) +
+  geom_point(aes(x = team, y = cost_point, color = "#fc8d62")) + 
+  labs(x = "Team", y = "Cost of Every Scored Point", title = "NBA Teams with Cost of A Scored Point") +
+  geom_hline(aes(yintercept = mean(cost_point)))
+```
+
+```{r}
+points_salary <- mutate(points_salary, cost_point_median = median_salary * 1000000 / median_points)
+ggplot(points_salary) +
+  #geom_point(aes(x = team, y = median_points, color = "#66c2a5")) +
+  #geom_point(aes(x = team, y = median_salary, color = "#8da0cb")) +
+  geom_point(aes(x = team, y = cost_point_median, color = "#fc8d62")) +
+  labs(x = "Team", y = "Cost of Every Scored Point", title = "NBA Teams with Cost of A Scored Point") +
+  scale_fill_discrete(name = NULL, labels = c("Cost per Point from Median"))
+```

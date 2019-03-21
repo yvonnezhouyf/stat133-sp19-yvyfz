@@ -1,0 +1,270 @@
+---
+title: "lab05-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "2/28/2019"
+output: html_document
+---
+#1)
+```{r eval = FALSE}
+# current directory
+pwd
+
+# the contents in your current directory
+mkdir
+
+#Use mkdir to create a new directory stat133-lab05
+mkdir stat133-lab05
+
+#Change directory to stat133-lab05
+cd stat133-lab05
+
+#Use the command curl to download the following text file:
+curl -O http://textfiles.com/food/bread.txt
+
+#Use the command ls to list the contents in your current directory
+ls
+
+#Use the command curl to download these other text files:
+curl -O http://textfiles.com/food/btaco.txt
+curl -O http://textfiles.com/food/1st_aid.txt
+curl -O http://textfiles.com/food/beesherb.txt
+curl -O http://textfiles.com/food/bakebred.txt
+
+#Use the command curl to download the following csv files:
+curl -O http://archive.ics.uci.edu/ml/machine-learning-databases/forest-fires/forestfires.csv
+curl -O http://web.pdx.edu/~gerbing/data/cars.csv
+curl -O http://web.pdx.edu/~gerbing/data/color.csv
+curl -O http://web.pdx.edu/~gerbing/data/snow.csv
+curl -O http://web.pdx.edu/~gerbing/data/mid1.csv
+curl -O http://web.pdx.edu/~gerbing/data/mid2.csv
+curl -O http://web.pdx.edu/~gerbing/data/minutes1.csv
+curl -O http://web.pdx.edu/~gerbing/data/minutes2.csv
+```
+
+#2)
+```{r eval = FALSE}
+#Use the command ls to list the contents in your current directory
+ls
+
+#Now try ls -l to list the contents in your current directory in long format
+ls -l
+
+#Look at the man documentation of ls to find out how to list the contents in reverse order
+ls -r
+
+#How would you list the contents in long format arranged by time?
+ls -l -c
+
+#Find out how to use the wildcard * to list all the files with extension .txt
+ls *.txt
+
+#Use the wildcard * to list all the files with extension .csv in reverse order
+ls -r *.csv
+
+#You can use the character ? to represent a single character: e.g. ls mid?.csv. Find out how to use the wilcard ? to list .csv files with names made of 4 characters (e.g. mid1.csv, snow.csv)
+ls ????.csv
+
+#The command ls *[1]*.csv should list .csv files with names containing the number 1 (e.g. mid1.csv, minutes1.csv). Adapt the command to list .csv files with names containing the number 2.
+ls *[2]*.csv
+
+#Find out how to list files with names containing any number.
+ls *[0-9]*
+
+```
+
+#3)
+```{r eval = FALSE}
+#Inside stat133-lab05 create a directory data
+mkdir data
+
+#Change directory to data
+cd data
+
+#Create a directory txt-files
+mkdir txt-files
+
+#Create a directory csv-files
+mkdir csv-files
+
+#Use the command mv to move the bread.txt file to the folder txt-files. Without changing directories, use ls to confirm that bread.txt is now inside txt-files.
+mv bread.txt txt-files
+ls txt-files
+
+#Use the wildcard * to move all the .txt files to the directory txt-files. Without changing directories, use ls to confirm that all the .txt files are inside txt-files.
+mv *.txt txt-files
+ls txt-files
+
+#Use the wildcard * to move all the .csv files to the directory csv-files. Without changing directories, use ls to confirm that all the .csv files are inside csv-files.
+mv *.csv csv-files
+ls csv-files
+
+#Try using the command tree to see a visual display of the filestructure. Warning: You may not have this command in git-bash or in another shell flavor.
+tree
+
+```
+
+#4)
+```{r eval = FALSE}
+#Go back to the parent directory stat133-lab05
+cd ..
+
+#Create a directory copies
+mkdir copies
+
+#Use the command cp to copy the bread.txt file (the one inside the folder txt-files) to the copies directory
+cp txt-files/bread.txt copies
+
+#Without changing directories, use ls to confirm that bread.txt is now inside copies.
+ls copies
+
+#Use the wildcard * to copy all the .txt files in the directory copies
+cp txt-files/*.txt copies
+
+#Without changing directories, use ls to confirm that all the .txt files is now inside copies.
+ls copies
+
+#Use the wildcard * to copy all the .csv files in the directory copies
+cp csv-files/*.csv copies
+
+#Try using the command tree to see a visual display of the filestructure.
+tree
+```
+
+#5)
+```{r eval = FALSE}
+#Change to the directory copies
+cd copies
+
+#Use the command mv to rename the file bread.txt as bread-recipe.txt
+mv bread.txt bread-recipe.txt
+
+#Rename the file cars.csv as autos.csv
+mv cars.csv autos.csv
+
+#Rename the file btaco.txt as breakfast-taco.txt
+mv btaco.txt breakfast-taco.txt
+
+#Change to the parent directory (i.e. stat133-lab05)
+cd ..
+
+#Rename the directory copies as copy-files
+mv copies copy-files
+
+#Find out how to use the rm command to delete the .csv files that are in copy-files
+rm copy-files/*.csv
+
+#Find out how to use the rm command to delete the directory copy-files
+rm -ir copy-files
+
+#List the contents of the directory txt-files displaying the results in reverse (alphabetical) order
+ls -r txt-files
+
+```
+
+#Exporting Objects from R to External Files
+```{r}
+write.csv(
+  x = mtcars, 
+  file = 'exports/dataset.csv'
+)
+```
+
+```{r}
+sink(file = 'exports/mtcars-structure.txt')
+str(mtcars)
+sink()
+```
+
+```{r}
+sink(file = 'exports/summary-mtcars.txt')
+summary(mtcars)
+sink()
+```
+
+```{r}
+png(filename = "exports/scatterplot-mpg-wt.png")
+plot(mtcars$mpg, mtcars$wt, pch = 20, 
+     xlab = 'Miles per Gallon', ylab = 'Weight')
+dev.off()
+```
+
+```{r}
+png(filename = "exports/scatterplot-hp-wt.png", pointsize = 20, res = 100)
+plot(mtcars$hp, mtcars$wt, pch = 20, 
+     xlab = 'Horsepower', ylab = 'Weight')
+dev.off()
+```
+
+```{r}
+jpeg(filename = "exports/histogram-mpg.jpeg", width = 600, height = 400, units = "px")
+hist(mtcars$mpg, pch = 20, 
+     xlab = 'Miles per Gallon')
+dev.off()
+```
+
+```{r}
+pdf(file = "exports/histogram-mpg.pdf", width = 7, height = 5)
+hist(mtcars$mpg, pch = 20, 
+     xlab = 'Miles per Gallon')
+dev.off()
+```
+
+```{r}
+library(ggplot2)
+ggplot(data = mtcars, aes(x = mpg)) +
+  geom_histogram()
+ggsave(file = "exports/gg_mpg_disp.png")
+```
+
+#Abalone
+```{r eval = FALSE}
+#Change to the directory stat133-lab05
+cd stat133-lab05
+
+#Create a directory abalone
+mkdir abalone
+
+#Change to abalone directory
+cd abalone
+
+#Use curl to download the file abalone.data
+curl -O http://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data
+
+#Use the file command to know what type of file is abalone.data.
+file abalone.data
+
+#Use the word count command wc to obtain information about: 1) newline count, 2) word count, and 3) byte count, of the abalone.data file.
+wc abalone.data
+
+#See the man documentation of wc and learn what option you should use to obtain only the number of lines in abalone.data.
+wc -l abalone.data
+
+#Use head to take a peek at the first lines (10 lines by default) of abalone.data
+head abalone.data
+
+#See the man documentation of head and learn what option you should use to display only the first 5 files in abalone.data.
+head -5 abalone.data
+
+#How would you display the first 15 files in abalone.data?
+head -15 abalone.data
+
+#Use tail to take a peek at the last lines (10 lines by default) of abalone.data
+tail abalone.data
+
+#See the man documentation of tail and learn what option you should use to display only the last 3 files in abalone.data.
+tail -3 abalone.data
+
+#Use the less command to look at the contents of abalone.data (this command opens a paginator so you can move up and down the contents of the file). Press the key q to exit the paginator.
+less abalone.data
+
+#Rename abalone.data as abalone.csv
+mv abalone.data abalone.csv
+
+#Make a copy of abalone.csv, naming this copy dataset.csv
+cp abalone.csv dataset.csv
+
+#Move dataset.csv to the directory csv-files
+mv dataset.csv ~/stat133-lab05/csv-files
+
+```
+

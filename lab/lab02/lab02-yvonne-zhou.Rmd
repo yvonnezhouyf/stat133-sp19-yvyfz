@@ -1,0 +1,115 @@
+---
+title: "lab02-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "2/8/2019"
+output: html_document
+---
+
+```{r}
+load('nba2018-salary-points.RData')
+four <- head(player, n = 4)
+four
+
+four[1]
+four[0]
+four[-1]
+four[-c(1,2,3)]
+four[5]
+four[c(1,2,2,3,3,3)]
+
+player[seq(2, length(player), by = 2)]
+salary[seq(1, length(salary), by = 2)]
+team[seq(5, length(team), by = 5)]
+scored[seq(10, length(scored), by = 10)]
+rev(team[seq(2, length(team), by = 2)])
+
+```
+```{r}
+# AND
+TRUE & TRUE
+TRUE & FALSE
+FALSE & FALSE
+
+# OR
+TRUE | TRUE
+TRUE | FALSE
+FALSE | FALSE
+
+# NOT
+!TRUE
+!FALSE
+
+# players of Golden State (GSW)
+player[team == 'GSW']
+
+# name of players with salaries greater than 20 million dollars
+player[salary > 20000000]
+
+# name of players with scored points between 1000 and 1200 (exclusive)
+player[scored > 1000 & scored < 1200]
+
+```
+
+```{r}
+player[team == "GSW" & position == "C"]
+player[team == "GSW" | team == "LAL"]
+player[team == "LAL" & (position == "SG" | position == "PG")]
+player[(team == "LAL" | team == "GSW") & position == "SF"]
+
+player[which.max(salary)]
+player[which.min(salary)]
+player[which.max(scored)]
+salary[which.max(scored)]
+max(salary[position == "C"])
+team[which.max(scored)]
+player[which.max(points3)]
+
+```
+
+```{r}
+library(plotly)
+plot(scored, salary)
+
+plot_ly(x = scored, y = salary, type = "scatter", mode = "markers")
+
+log_scored <- log(scored)
+log_salary <- log(salary)
+
+plot(log_scored, log_salary)
+
+plot(log_scored, log_salary)
+text(log_scored, log_salary, labels = player)
+
+plot(log_scored, log_salary)
+text(log_scored, log_salary, labels = abbreviate(player))
+
+```
+```{r}
+plot(scored[team == "GSW"], salary[team == "GSW"])
+text(scored[team == "GSW"], salary[team == "GSW"], labels = abbreviate(player))
+
+log_scored <- log(scored[team == "GSW"])
+log_salary <- log(salary[team == "GSW"])
+plot(log_scored, log_salary)
+text(log_scored, log_salary, labels = abbreviate(player))
+```
+
+```{r}
+position_fac <- factor(position)
+table(position_fac)
+
+```
+
+```{r}
+position_fac[team == "GSW"]
+position[salary > 15000000]
+table(position_fac[salary > 15000000])
+team_fac <- factor(team)
+table(team_fac[position == "SG"]) / table(team_fac)
+```
+
+```{r}
+plot(scored, salary, col = position_fac)
+
+```
+

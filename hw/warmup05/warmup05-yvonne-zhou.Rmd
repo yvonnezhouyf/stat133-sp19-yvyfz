@@ -1,0 +1,144 @@
+---
+title: "warmup05-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "3/16/2019"
+output: html_document
+---
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
+#Gaussian Function
+```{r}
+gaussian <- function(x = 0, m = 0, s = 1) {
+  if (s < 0) {
+    stop("s must be greater than zero")
+  } else {
+    return (1/(s*(2 * pi)**0.5) * exp(1) ** (-0.5 * ((x - m) / s) ** 2))
+  }
+}
+```
+
+```{r}
+# test set 1
+gaussian(x = 0, m = 0, s = 1)
+gaussian(x = 1, m = 0, s = 2)
+# test set 2
+gaussian(x = 1, m = 0, s = 0)
+gaussian(x = 1, m = 0, s = -1)
+```
+
+```{r}
+# gaussian curve
+x_values <- seq(from = -4.5, to = 4.5, by = 0.1)
+y_values <- gaussian(x_values, m = 0, s = 2)
+plot(x_values, y_values, las = 1, type = "l", lwd = 2)
+```
+
+```{r}
+x = seq(from = -4.5, to = 4.5, by = 0.1)
+y_blue = gaussian(x, m = 0, s = 0.2**0.5)
+y_red = gaussian(x, m = 0, s = 1**0.5)
+y_yellow = gaussian(x, m = 0, s = 5**0.5)
+y_green = gaussian(x, m = -2, s = 0.5**0.5)
+
+#gaussian curve
+plot(x, y_blue, las = 1, type = "l", lwd = 2, col = "#0000BB", 
+     xlab = "x", ylab = expression(phi[mu][sigma^2](x)))
+lines(x, y_red, las = 1, type = "l", lwd = 2, col = "#BB0000")
+lines(x, y_green, las = 1, type = "l", lwd = 2, col = "#006400")
+lines(x, y_yellow, las = 1, type = "l", lwd = 2, col = "#CD950C")
+
+#legend
+legend(x = 1.2, y = 0.9, lty = 1, lwd = 2, 
+       legend = c(expression(mu~" = 0, "~sigma^2~"= 0.2"),
+                  expression(mu~" = 0, "~sigma^2~"= 1.0"),
+                  expression(mu~" = 0, "~sigma^2~"= 5.0"),
+                  expression(mu~" = -2, "~sigma^2~"= 0.5")), 
+       col = c("#0000BB", "#BB0000", "#006400", "#CD950C"), box.col = "white")
+```
+
+#Descriptive Statistics
+```{r}
+descriptive <- function(x = 0, na.rm = FALSE) {
+  if (!is.numeric(x)) {
+    stop("the input vector must be numeric")
+  } else {
+    return(c(min(x, na.rm = na.rm), 
+             quantile(x, na.rm = na.rm)[[2]][1], 
+             median(x, na.rm = na.rm), 
+             quantile(x, na.rm = na.rm)[[3]][1], 
+             max(x, na.rm = na.rm), 
+             range(x, na.rm = na.rm), 
+             IQR(x, na.rm = na.rm), 
+             sd(x, na.rm = na.rm)
+             )
+           )
+  }
+}
+```
+
+```{r}
+# input vectors
+set.seed(100)
+x <- rnorm(100)
+y <- x
+y[sample(1:100, size = 10)] <- NA
+# test set 1
+descriptive(x)
+descriptive(y)
+descriptive(y, na.rm = TRUE)
+descriptive(letters)
+# test set 2
+a <- descriptive(x)
+class(a)
+length(a)
+names(a)
+```
+
+#Minkowski Distance
+```{r}
+minkowski <- function(x, y, p = 1) {
+  if (length(x) != length(y)) {
+    stop("x and y have different lengths")
+  } else if (is.numeric(p)) {
+      if (p < 1) {
+        stop("p cannot be less than 1")
+      } else {
+          result = 0
+          for (i in range(length(x))) {
+            result = result + abs(x[i] - y[i])
+          }
+          result = result ** (1 / p)
+          return(result)
+      }
+  } else if (is.character(p)) {
+      if (p != "max") {
+        stop("invalid character value for p")
+      } else {
+          result = 0
+          for (i in range(length(x))) {
+            result = max(result, abs(x[i] - y[i]))
+          }
+          return(result)
+      }
+  }
+}
+```
+
+```{r}
+# some points
+point1 <- c(0, 0)
+point2 <- c(1, 1)
+point3 <- sqrt(c(2, 2))
+point4 <- c(0, 1)
+point5 <- c(1, 1, 1)
+# test set 1
+minkowski(point1, point2, p = 1)
+minkowski(point1, point3, p = 2)
+minkowski(point1, point2, p = 'max')
+# test set 2
+minkowski(point4, point5, p = 1)
+minkowski(point1, point2, p = 0.5)
+minkowski(point1, point2, p = 'min')
+```

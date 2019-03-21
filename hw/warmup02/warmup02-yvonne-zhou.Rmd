@@ -1,0 +1,91 @@
+---
+title: "warmup02-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "2/09/2019"
+output: html_document
+---
+
+```{r}
+number <- c(30L, 25L, 23L, 9L, 11L, 27L, 34L, 6L, 3L, 0L)
+player <- c('Stephen Curry', 'Kevin Durant', 'Draymond Green', 'Andre Lguodala', 'Klay Thompson', 'Zaza Pachulia', 'Shaun Livingston', 'Nick Young', 'David West', 'Patrick McCaw')
+position <- c('PG', 'PF', 'PF', 'SF', 'SG', 'C', 'PG', 'SG', 'C', 'SG')
+height <- c('6-3', '6-9', '6-7', '6-6', '6-7', '6-11', '6-7', '6-7', '6-9', '6-7')
+weight <- c(190, 240, 230, 215, 215, 270, 192, 210, 250, 185)
+birthdate <- c('March 14, 1988', 'September 29, 1988', 'March 4, 1990', 'January 28, 1984', 'February 8, 1990', 'February 10, 1984', 'September 11, 1985', 'June 1, 1985', 'August 29, 1980', 'October 25, 1995')
+experience <- c(8L, 10L, 5L, 13L, 6L, 14L, 12L, 10L, 14L, 1L)
+college <- c('Davidson College', 'University of Texas at Austin', 'Michigan State University', 'University of Arizona', 'Washington State University', NA, NA, 'University of Southern California', 'Xavier University', 'University of Nevada, Las Vegas')
+
+player[which.max(weight)]
+college[height == '6-6']
+position[which.max(experience)]
+number[which.min(weight)]
+table(position)
+length(which(weight > mean(weight)))
+length(which(experience >= 9 & experience <= 12))
+mean(experience[position == 'SG'])
+median(weight[position != 'C'])
+quantile(experience[position == 'PF' | position == 'SG'])[[2]][1]
+```
+
+```{r}
+gsw <- list(
+  player = player,
+  number = number,
+  position = position,
+  weight = weight,
+  experience = experience
+)
+gsw[[2]][which.max(gsw[[4]])]
+gsw[[3]][which.min(gsw[[5]])]
+length(which(gsw[[5]] < 8 | gsw[[5]] > 11))
+quantile(gsw[[5]][gsw[[3]] == 'PF' | gsw[[3]] == 'SG'])[[4]][1]
+gsw[[1]][which.max(abs(gsw[[4]] - mean(gsw[[4]])))]
+```
+```{r}
+hp <- list(
+first = 'Harry',
+last = 'Potter',
+courses = c('Potions', 'Enchantments', 'Spells'),
+sport = 'quidditch',
+age = 18L,
+gpa = 3.9
+)
+class(hp)
+length(hp)
+length(hp[[3]])
+typeof(hp[[5]])
+typeof(c(hp[[5]], hp[[6]]))
+```
+
+```{r}
+"In this situation, r considers TRUE to be 1."
+"In r, strings are more prioritized."
+"10 <= 5 returns false in r. In situations like false >= 0, r considers false to be 0, which is sure to be larger or equal to 0."
+"Since in command A, it is 1 that comes first, so the result would be an integer like 1.In command B, however, it is the boolean value !TRUE that comes first, so the result would also be a boolean value. The final result is determined by the value before the addition sign."
+```
+
+```{r}
+lord <- c('v', 'o', 'l', 'd', 'e', 'm', 'o', 'r', 't')
+lord[TRUE] # TRUE in breackets makes r returns all elements
+lord[length(lord) + 1] # the "length(lord) + 1" in brackest asks the element that does not exist, so r returns NA
+lord[seq(from = length(lord), to = 1, by = -2)] # things in brackets asks r to return the elements of lord starting from the last elements to the first element with the step of 2.
+lord[lord == "o"] # things in brackest asks r to return the elements only when the element in lord is equal to "o".
+lord[lord != "e" & lord != "o"] # things in brackest asks r to return the elements only when the element in lord is not equal to "o"
+lord[lord %in% c('a', 'e', 'i', 'o', 'u')] #things in brackets asks r to return the elements in lord that is equal to 'a' or 'e' or 'i' or 'u'
+toupper(lord[!(lord %in% c('a', 'e', 'i', 'o', 'u'))]) # things in brackets asks r to retuen elements that is not equal to 'a' or 'e' or 'i' or 'u', and the toupper() function uppercases the elements
+paste(lord, collapse = '') # this statamen asks r to combine elements in lord with no blank spaces
+lord[is.na(lord)] # is.na(lord) returns false as lord is not NA, and lord[FALSE] returns character(0) since there's no 0 element so r returns the type of elements in lord
+sum(!is.na(lord)) # !is.na(lord) returns true as lord is not NA, and the sum function counts the number of elements in lord.
+
+```
+```{r}
+vol <- matrix(lord, 3, 3)
+vol[1,]
+vol[c(1, 2), c(2, 1)]
+vol[c(3, 2, 1), c(1, 2, 3)]
+vol[c(1, 2, 3), c(1, 2, 2)]
+vol[c(3, 2, 1), c(3, 2, 1)]
+vol[c(3, 2, 1, 1, 2, 3), c(3, 2, 2, 3)]
+vol[c(3, 2, 1, 1, 2, 3), c(1, 2, 3, 3, 2, 1)]
+```
+
