@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, error = TRUE)
 #Gaussian Function
 ```{r}
 gaussian <- function(x = 0, m = 0, s = 1) {
-  if (s < 0) {
+  if (s <= 0) {
     stop("s must be greater than zero")
   } else {
     return (1/(s*(2 * pi)**0.5) * exp(1) ** (-0.5 * ((x - m) / s) ** 2))
@@ -55,7 +55,7 @@ legend(x = 1.2, y = 0.9, lty = 1, lwd = 2,
                   expression(mu~" = 0, "~sigma^2~"= 1.0"),
                   expression(mu~" = 0, "~sigma^2~"= 5.0"),
                   expression(mu~" = -2, "~sigma^2~"= 0.5")), 
-       col = c("#0000BB", "#BB0000", "#006400", "#CD950C"), box.col = "white")
+       col = c("#0000BB", "#BB0000", "#006400", "#CD950C"), box.col = "#FFFFFF")
 ```
 
 #Descriptive Statistics
@@ -64,16 +64,18 @@ descriptive <- function(x = 0, na.rm = FALSE) {
   if (!is.numeric(x)) {
     stop("the input vector must be numeric")
   } else {
-    return(c(min(x, na.rm = na.rm), 
+    result = c(min(x, na.rm = na.rm), 
              quantile(x, na.rm = na.rm)[[2]][1], 
              median(x, na.rm = na.rm), 
-             quantile(x, na.rm = na.rm)[[3]][1], 
+             mean(x, na.rm = na.rm),
+             quantile(x, na.rm = na.rm)[[4]][1], 
              max(x, na.rm = na.rm), 
-             range(x, na.rm = na.rm), 
+             max(x, na.rm = na.rm) - min(x, na.rm = na.rm), 
              IQR(x, na.rm = na.rm), 
              sd(x, na.rm = na.rm)
              )
-           )
+    names(result) = c("minimum", "first quantile", "median", "mean", "third quantile", "maximum", "range", "IQR", "standard deviation")
+    return(result)
   }
 }
 ```
@@ -107,7 +109,7 @@ minkowski <- function(x, y, p = 1) {
       } else {
           result = 0
           for (i in range(length(x))) {
-            result = result + abs(x[i] - y[i])
+            result = result + abs(x[i] - y[i]) ** p
           }
           result = result ** (1 / p)
           return(result)

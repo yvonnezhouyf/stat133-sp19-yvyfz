@@ -1,0 +1,73 @@
+---
+title: "lab08-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "3/20/2019"
+output: html_document
+---
+
+#Summation Series
+```{r}
+last_2 = 0
+result_2= c()
+for (j in 0:20) {
+  last_2 = last_2 + 1/(2**j)
+  result_2 = append(result_2, last_2)
+}
+result_2
+```
+
+```{r}
+last_9 = 0
+result_9 = c()
+for (j in 0:20) {
+  last_9 = last_9 + 1/(9**j)
+  result_9 = append(result_9, last_9)
+}
+result_9
+```
+
+#Arithmetic Series
+```{r}
+first = 3
+result_a_add = c()
+for (i in 1:20) {
+  result_a_add = append(result_a_add, first + (i - 1) * 3)
+}
+result_a_add
+```
+
+#Geometric Sequence
+```{r}
+first = 3
+result_a_mul = c()
+for (i in 1:20) {
+  result_a_mul = append(result_a_mul, first * 2 ** (i - 1))
+}
+#result_a_mul
+sum(result_a_mul)
+```
+
+#Sine Approximation
+```{r}
+my_sin <- function(x, n) {
+  result = 0
+  for (i in 1:n) {
+    result = result + (-1) **((n + 1) / 2) * x ** n / factorial(n)
+  }
+  return(result)
+}
+
+my_sin(pi, 5) - sin(pi)
+my_sin(pi, 10) - sin(pi)
+my_sin(pi, 50) - sin(pi)
+my_sin(pi, 100) - sin(pi)
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
