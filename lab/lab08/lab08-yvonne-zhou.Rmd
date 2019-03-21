@@ -4,6 +4,9 @@ author: "Yvonne Zhou"
 date: "3/20/2019"
 output: html_document
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
 
 #Summation Series
 ```{r}
@@ -51,8 +54,11 @@ sum(result_a_mul)
 ```{r}
 my_sin <- function(x, n) {
   result = 0
+  index = 1
   for (i in 1:n) {
-    result = result + (-1) **((n + 1) / 2) * x ** n / factorial(n)
+    result = result + ((-1) **(index + 1) * x ** (2 * i - 1)) / factorial(2 * i - 1)
+    index = index + 1
+    #print(result)
   }
   return(result)
 }
@@ -60,14 +66,104 @@ my_sin <- function(x, n) {
 my_sin(pi, 5) - sin(pi)
 my_sin(pi, 10) - sin(pi)
 my_sin(pi, 50) - sin(pi)
-my_sin(pi, 100) - sin(pi)
+#my_sin(pi, 100) - sin(pi)
+```
+
+#Average
+```{r}
+my_average <- function(ends) {
+  n_ave = 1
+  sum_ave = 0
+  while(n_ave <= ends) {
+    sum_ave = sum_ave + n_ave
+    n_ave = n_ave + 1
+  }
+  return(sum_ave / (n_ave - 1))
+}
+my_average(100)
+```
+
+#Standard Deviation
+```{r}
+my_sd <- function(ends) {
+  n_sd = 1
+  sum_sd = 0
+  while(n_sd <= ends) {
+    sum_sd = sum_sd + (n_sd - my_average(ends)) ** 2
+    n_sd = n_sd + 1
+  }
+  return(sqrt(sum_sd / (n_sd - 2)))
+}
+my_sd(100)
+```
+
+#Geometric Mean
+```{r}
+my_gm <- function(ends) {
+  n_gm = 1
+  mul_gm = 1
+  while(n_gm <= ends) {
+    mul_gm = mul_gm * n_gm
+    n_gm = n_gm + 1
+  }
+  return(mul_gm ** (1 / ends))
+}
+my_gm(50)
+```
+
+#Distance Matrix of Letters
+```{r}
+# random distance matrix
+num_letters <- length(LETTERS)
+set.seed(123)
+values <- sample.int(num_letters) 
+distances <- values %*% t(values)
+diag(distances) <- 0
+dimnames(distances) <- list(LETTERS, LETTERS)
+distances[1:5, 1:5]
+# (E to D) + (D to A)
+483 + 168
 ```
 
 ```{r}
+#distances[2, 3]
+distances["A", "D"]
+```
 
+#get_dist()
+```{r}
+get_dist <- function(distances, ltrs) {
+  #if (ltrs )
+  dis_sum = 0
+  for (i in 2:length(ltrs)) {
+    dis_sum = dis_sum + distances[ltrs[i - 1], ltrs[i]]
+  }
+  return(dis_sum)
+}
 ```
 
 ```{r}
+vec <- c('E', 'D', 'A')
+get_dist(distances, vec)
+```
 
+```{r}
+err <- c('E', 'D', ')')
+get_dist(distances, err)
+```
+
+```{r}
+cal <- c('C', 'A', 'L')
+stats <- c('S', 'T', 'A', 'T', 'S')
+oski <- c('O', 'S', 'K', 'I')
+zzz <- rep('Z', 3)
+lets <- LETTERS
+
+
+get_dist(distances, cal)
+get_dist(distances, stats)
+get_dist(distances, oski)
+get_dist(distances, zzz)
+get_dist(distances, lets)
 ```
 
