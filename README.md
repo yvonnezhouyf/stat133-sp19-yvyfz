@@ -6,3 +6,8 @@
 
 - Name: Yvonne Zhou
 - Lab Section: 107
+
+-----
+
+- warmups and workouts in the hw folder
+- labs in the lab folder
