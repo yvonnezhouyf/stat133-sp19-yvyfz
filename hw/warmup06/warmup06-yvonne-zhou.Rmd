@@ -1,0 +1,178 @@
+---
+title: "warmup06-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "3/24/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
+```{r}
+library(ggplot2)
+```
+
+#1) Future Value Fuction
+@title future_value
+@description calculate the future value of the amount of money after a few years
+@param amount, rate, years
+@return the amount of value that will return after a few years
+```{r}
+future_value <- function(amount, rate, years) {
+  return(amount * (1 + rate) ** years)
+}
+```
+
+```{r}
+future_value(amount = 100, rate = 0.05, years = 1)
+future_value(amount = 500, rate = 0.05, years = 5)
+future_value(amount = 1000, rate = 0.05, years = 10)
+```
+
+#2) Future Value of Annuity
+@title annuity
+@description calculate the future value of annuity after a few years
+@param contrib, rate, years
+@return the annuity that will return after a few years
+```{r}
+annuity <- function(contrib, rate, years) {
+  return(contrib * (((1 + rate) ** years) - 1) / rate)
+}
+```
+
+```{r}
+annuity(contrib = 200, rate = 0.05, years = 1)
+annuity(contrib = 200, rate = 0.05, years = 2)
+annuity(contrib = 200, rate = 0.05, years = 10)
+```
+
+#3) Future Value of Growing Annuity
+@title growing_annuity
+@description calculate the future value of growing annuity after a few years
+@param contrib, rate, growth, years
+@return the funture value of growing annuity that will return after a few years
+```{r}
+growing_annuity <- function(contrib, rate, growth, years) {
+  return(contrib * (((1 + rate) ** years - (1 + growth) ** years) / (rate - growth)))
+}
+```
+
+```{r}
+growing_annuity(contrib = 200, rate = 0.05, growth = 0.03, years = 1)
+growing_annuity(contrib = 200, rate = 0.05, growth = 0.03, years = 2)
+growing_annuity(contrib = 200, rate = 0.05, growth = 0.03, years = 10)
+```
+
+#4) Investing Modalities
+```{r}
+no_contrib = c(1000)
+fixed_contrib = c(1000)
+growing_contrib = c(1000)
+for (i in 1: 10) {
+  no_contrib = append(no_contrib, future_value(1000, 0.05, i))
+  fixed_contrib = append(fixed_contrib, future_value(1000, 0.05, i) + annuity(200, 0.05, i))
+  growing_contrib = append(growing_contrib, future_value(1000, 0.05, i) + growing_annuity(200, 0.05, 0.03, i))
+}
+year = 0:10
+modalities = data.frame(year, no_contrib, fixed_contrib, growing_contrib)
+modalities
+```
+
+```{r}
+ggplot(data = modalities) + 
+  labs(x = "Years", y = "Amount of Money") +
+  ggtitle("Comparison Between Three Models") +
+  geom_line(aes(x = year, y = no_contrib, group = 1, color = "#FF6347")) + 
+  geom_line(aes(x = year, y = fixed_contrib, group = 2, color = "blue")) + 
+  geom_line(aes(x = year, y = growing_contrib, group = 3, color = "green")) +
+  scale_color_manual(name  ="modality",
+                    labels = c("no_contrib", "fixed_contrib", "growing_contrib"),
+                    values = c("#FF6347", "#228B22", "#56B4E9")
+                    ) +
+  theme_light() +
+  theme(plot.title = element_text(family = "Trebuchet MS", color = "#666666", face ="bold", size = 16, hjust = 0.5)) +
+  theme(axis.title = element_text(family = "Trebuchet MS", color ="#666666", face ="bold", size = 12))
+```
+
+#5) Saving Simulation
+```{r}
+no_contrib_regular = c(10000)
+no_contrib_highy = c(10000)
+no_contrib_index = c(10000)
+fixed_contrib_regular = c(10000)
+fixed_contrib_highy = c(10000)
+fixed_contrib_index = c(10000)
+growing_contrib_regular = c(10000)
+growing_contrib_highy = c(10000)
+growing_contrib_index = c(10000)
+
+
+for (i in 1: 15) {
+  no_contrib_regular = append(no_contrib_regular, future_value(10000, 0.001, i))
+  no_contrib_highy = append(no_contrib_highy, future_value(10000, 0.0225, i))
+  no_contrib_index = append(no_contrib_index, future_value(10000, 0.065, i))
+  
+  fixed_contrib_regular = append(fixed_contrib_regular, future_value(10000, 0.001, i) + annuity(2000, 0.001, i))
+  fixed_contrib_highy = append(fixed_contrib_highy, future_value(10000, 0.0225, i) + annuity(2000, 0.0225, i))
+  fixed_contrib_index = append(fixed_contrib_index, future_value(10000, 0.065, i) + annuity(2000, 0.065, i))
+  
+  growing_contrib_regular = append(growing_contrib_regular, future_value(10000, 0.001, i) + growing_annuity(2000, 0.001, 0.04, i))
+  growing_contrib_highy = append(growing_contrib_highy, future_value(10000, 0.0225, i) + growing_annuity(2000, 0.0225, 0.04, i))
+  growing_contrib_index = append(growing_contrib_index, future_value(10000, 0.065, i) + growing_annuity(2000, 0.065, 0.04, i))
+}
+
+#no_contrib_regular
+#no_contrib_highy
+#no_contrib_index
+#fixed_contrib_regular
+#fixed_contrib_highy
+#fixed_contrib_index
+#growing_contrib_regular
+#growing_contrib_highy
+#growing_contrib_index
+```
+
+```{r}
+years = 0:15
+name = c("Year", "NoContribution", "FixedContribution", "GrowingContribution", "Rates")
+regular = data.frame(years, no_contrib_regular, fixed_contrib_regular, growing_contrib_regular)
+regular$rates = "1"
+#regular = t(regular)
+names(regular) = name
+#regular
+
+highy = data.frame(years, no_contrib_highy, fixed_contrib_highy, growing_contrib_highy)
+highy$rates = "2"
+#highy = t(highy)
+names(highy) = name
+#highy
+
+index = data.frame(years, no_contrib_index, fixed_contrib_index, growing_contrib_index)
+index$rates = "3"
+names(index) = name
+#index = t(index)
+#index
+
+ratenames <- c("1" = "regular savings", "2" = "high-yield savings", "3" ="index fund")
+
+total = rbind(rbind(regular, highy), index)
+total
+```
+
+
+```{r}
+tt <- ggplot(data = total) +  
+      geom_point(aes(x = Year, y = NoContribution, color = "#FF6347")) +
+      geom_point(aes(x = Year, y = FixedContribution, color = "blue")) +
+      geom_point(aes(x = Year, y = GrowingContribution, color = "green")) +
+      geom_line(aes(x = Year, y = NoContribution, color = "#FF6347")) +
+      geom_line(aes(x = Year, y = FixedContribution, color = "blue")) +
+      geom_line(aes(x = Year, y = GrowingContribution, color = "green")) +
+      facet_wrap(~Rates, labeller = as_labeller(ratenames)) +
+      ylab("balance") +
+      xlab("year") +
+      labs(colour = "modality") +
+      scale_color_manual(labels = c("no_contrib", "fixed_contrib", "growing_contrib"), values = c("#FF6347", "#228B22", "#56B4E9"))
+tt
+```
