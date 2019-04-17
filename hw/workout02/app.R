@@ -9,6 +9,7 @@
 
 library(shiny)
 library(ggplot2)
+library(rsconnect)
 
 #Define some global functions
 future_value <- function(amount, rate, years) {
@@ -37,13 +38,15 @@ ui <- fluidPage(
                         min = 0,
                         max = 100000,
                         value = 1000,
-                        step = 500),
+                        step = 500,
+                        pre = "$"),
             sliderInput("acontrib",
                         "Annual Contribution",
                         min = 0,
                         max = 50000,
                         value = 2000,
-                        step = 500)
+                        step = 500,
+                        pre = "$")
             ),
      column(4,
             sliderInput("rrate",
@@ -149,7 +152,22 @@ server <- function(input, output) {
    })
    
    output$summary_table <- renderPrint({
-     head(modalities, 11)
+     # generate data frame based on input
+     no_contrib = c(input$initial)
+     fixed_contrib = c(input$initial)
+     growing_contrib = c(input$initial)
+     for (i in 1: input$years) {
+       no_contrib = append(no_contrib, future_value(input$initial, input$rrate / 100, i))
+       fixed_contrib = append(fixed_contrib, future_value(input$initial, input$rrate / 100, i) 
+                              + annuity(input$acontrib, input$rrate / 100, i))
+       growing_contrib = append(growing_contrib, future_value(input$initial, input$rrate / 100, i) 
+                                + growing_annuity(input$acontrib, input$rrate / 100, input$growthr / 100, i))
+     }
+     year = 0:input$years
+     modalities = data.frame(year, no_contrib, fixed_contrib, growing_contrib)
+     # do not modify modalities, it needs to be print out
+     
+     modalities
    })
 }
 
