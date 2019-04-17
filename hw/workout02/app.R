@@ -9,7 +9,6 @@
 
 library(shiny)
 library(ggplot2)
-library(rsconnect)
 
 #Define some global functions
 future_value <- function(amount, rate, years) {
