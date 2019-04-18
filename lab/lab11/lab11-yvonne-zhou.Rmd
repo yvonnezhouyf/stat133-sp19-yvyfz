@@ -1,0 +1,96 @@
+---
+title: "lab11-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "4/17/2019"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(stringr)
+library(ggplot2)
+```
+
+```{r}
+emotion = read.csv("https://raw.githubusercontent.com/ucb-stat133/stat133-labs/master/data/text-emotion.csv", stringsAsFactors = FALSE)
+#emotion = data.frame(emotion)
+```
+
+#Number of characters per tweet
+```{r}
+#emotion$content = str_replace_all(emotion$content, "&amp;", "&")
+#emotion$content = str_replace_all(emotion$content, "&quot;", '"')
+#emotion$content = str_replace_all(emotion$content, "&lt;", "<")
+#emotion$content = str_replace_all(emotion$content, "&gt;", ">")
+#emotion$clength = nchar(emotion$content)
+#arrange(emotion, desc(clength))
+
+clength = nchar(emotion$content)
+head(clength)
+summary(clength)
+```
+
+```{r}
+ggplot(data = data.frame(clength)) +
+  geom_histogram(aes(x = data.frame(clength)$clength), alpha = 0.5, binwidth = 5, color = "white") + 
+  xlab("length") +
+  theme_bw()
+#hist(data.frame(clength)$clength, breaks = 170 / 5, xlim = c(0, 180), xlab = "length")
+```
+
+```{r}
+sort(clength)[1] == 0
+```
+
+```{r}
+sort(clength)[1] == 1
+sum(clength == 1)
+filter(arrange(cbind(emotion, clength), clength), clength == 1)$content
+which(nchar(emotion$content) == 1)
+```
+
+```{r}
+sort(clength, decreasing = TRUE)[1]
+arrange(cbind(emotion, clength), desc(clength))$content[1]
+which(nchar(emotion$content) == sort(clength, decreasing = TRUE)[1])
+```
+
+#Author(usernames)
+```{r}
+length(filter(cbind(emotion, nchar(emotion$author)), nchar(emotion$author) > 15)$author) == 0
+
+emotion[str_detect(emotion$author, "\\W"),]$author
+
+sorted = arrange(cbind(emotion, nchar(emotion$author)), nchar(emotion$author))
+names(sorted) = c("tweet_id", "sentiment", "author", "content", "length")
+sorted$length[1]
+filter(sorted, sorted$length == sorted$length[1])$author
+```
+
+#Various Symbols and Strings
+```{r}
+tweet_content = emotion$content
+sum(str_detect(tweet_content, "\\^"))
+sum(str_detect(tweet_content, "\\$$$*"))
+length(emotion$tweet_id) - sum(str_detect(tweet_content, '[Aa]+')) 
+emotion$contains = str_detect(tweet_content, '[Aa]+')
+arrange(emotion, contains)$content[1:10]
+summary(str_count(tweet_content, "!"))
+max(str_count(tweet_content, "!"))
+```
+
+#Sentiment
+```{r}
+freq = data.frame(table(emotion$sentiment))
+freq$Var1 = as.character(freq$Var1)
+freq$Var1
+table(emotion$sentiment)
+sorted = data.frame(sort(table(emotion$sentiment)))
+ggplot(data = sorted) +
+  geom_bar(aes(x = Var1, y = Freq, alpha = 0.5), stat = "identity", show.legend = FALSE) + 
+  xlab("emotions") + 
+  coord_flip() + 
+  theme_bw()
+summarise(group_by(emotion, sentiment), avg_length = mean(nchar(content)))
+```
+
