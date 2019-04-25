@@ -1,0 +1,104 @@
+---
+title: "lab12-yvonne-zhou"
+author: "Yvonne Zhou"
+date: "4/24/2019"
+output: html_document
+---
+
+```{r}
+library(XML)
+library(xml2)
+library(rvest)
+library(magrittr)
+library(stringr)
+```
+
+```{r}
+basket <- "https://www.basketball-reference.com"
+gsw <- "/teams/GSW/2017.html"
+gsw_url <- paste0(basket, gsw)
+
+# download HTML file to your working directory
+download.file(gsw_url, 'gsw-roster-2017.html')
+
+# Read GSW Roster html table
+gsw_roster <- readHTMLTable('gsw-roster-2017.html')
+```
+
+```{r}
+nba_html <- paste0(basket, "/leagues/NBA_2017.html")
+
+xml_doc <- read_html(nba_html)
+```
+
+#Your turn*
+```{r}
+#Store the href attributes in a character vector hrefs.
+hrefs = xml_doc %>%
+          html_nodes("table") %>%
+          extract(1:2) %>% 
+          html_nodes("a") %>%
+          html_attr("href")
+hrefs
+```
+```{r}
+teams = str_sub(hrefs, start = 8L, end = 10L)
+teams
+```
+
+```{r}
+files = paste0(teams, "-roster-2017.csv")
+files
+```
+
+```{r}
+# modify with `hrefs[1]`
+#basket <- "https://www.basketball-reference.com"
+team <- hrefs[1]
+team_url <- paste0(basket, team)
+team_file = read_html(team_url)
+roster = html_table(team_file)
+roster
+write.csv(roster, "BOS-roster-2017.csv")
+```
+
+```{r}
+for (i in 2:6) {
+  team <- hrefs[i]
+  team_url_i <- paste0(basket, team)
+  team_file_i = read_html(team_url_i)
+  roster = html_table(team_file_i)
+  write.csv(roster, files[i])
+}
+
+```
+
+```{r}
+#Using all the saved csv files, how would you build a global table containing the extracted rosters, in a way that this table would also have a column for the team?
+#Try getting such a global table and save it in a file nba-rosters-2017.csv
+
+BOS = read.csv("BOS-roster-2017.csv")
+CLE = read.csv("CLE-roster-2017.csv")
+TOR = read.csv("TOR-roster-2017.csv")
+WAS = read.csv("WAS-roster-2017.csv")
+ATL = read.csv("ATL-roster-2017.csv")
+MIL = read.csv("MIL-roster-2017.csv")
+
+BOS$team = "BOS"
+CLE$team = "CLE"
+TOR$team = "TOR" 
+WAS$team = "WAS"
+ATL$team = "ATL" 
+MIL$team = "MIL" 
+
+nba = rbind(rbind(rbind(rbind(rbind(BOS, CLE), TOR), WAS), ATL), MIL)
+write.csv(nba, "nba-rosters-2017.csv")
+```
+
+
+
+
+
+
+
+
