@@ -1,0 +1,33 @@
+---
+title: "Untitled1"
+author: "Yvonne Zhou"
+date: "5/2/2019"
+output: html_document
+---
+```{r}
+check_success <- function(success, trials) {
+  for (i in length(success)) {
+    if (success[i] > trials || success[i] < 0 || (success[i] %% 1 != 0)) {
+      stop("invalid success value")
+    }
+    return(TRUE)
+  }
+}
+
+bin_probability <- function(success, trials, prob) {
+  if(!check_trials(trials)) {
+    stop("invalid trials value")
+  } else if (!check_prob(prob)) {
+    stop("invalid prob value")
+  } else if (!check_success(success, trials)) {
+    stop("invalid success value")
+  } else {
+    return(bin_choose(trials, success) * (prob ** success) * ((1 - prob) ** (trials - success)))
+  }
+}
+```
+
+```{r}
+bin_distribution(5, 0.5)
+```
+
