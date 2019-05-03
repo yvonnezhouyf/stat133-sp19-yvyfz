@@ -1,0 +1,8 @@
+"0","check_successes <- function(success, trials) {"
+"0","  for (i in length(success)) {"
+"0","    if (success[i] > trials || success[i] < 0 || (success[i] %% 1 != 0)) {"
+"0","      stop(""invalid success value"")"
+"0","    }"
+"0","    return(TRUE)"
+"0","  }"
+"0","}"

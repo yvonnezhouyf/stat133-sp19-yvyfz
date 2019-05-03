@@ -1,0 +1,6 @@
+"0","bin_choose <- function(n, k) {"
+"0","  if (max(k) == 1 && k > n) {"
+"0","    stop(""k cannot be greater than n"")"
+"0","  }"
+"0","  return(factorial(n) / (factorial(k) * factorial(n - k)))"
+"0","}"

@@ -1,0 +1,6 @@
+"0","check_prob <- function(prob) {"
+"0","  if (prob <= 1 && prob >= 0) {"
+"0","    return(TRUE)"
+"0","  }"
+"0","  stop(""invalid prob value"")"
+"0","}"

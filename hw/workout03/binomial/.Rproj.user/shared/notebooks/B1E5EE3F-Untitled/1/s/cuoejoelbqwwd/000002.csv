@@ -1,0 +1,10 @@
+"0","bin1 <- bin_variable(trials = 10, p = 0.3)"
+"0","bin1"
+"1","""Binomial variable"" 
+
+Paramaters
+- number of trials: "
+"1","10"
+"1","
+- prob of success : "
+"1","0.3"

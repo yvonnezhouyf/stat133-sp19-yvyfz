@@ -1,0 +1,6 @@
+"0","check_trials <- function(trials) {"
+"0","  if(trials > 0 && (trials %% 1 == 0)) {"
+"0","    return(TRUE)"
+"0","  }"
+"0","  stop(""invalid trials value"")"
+"0","}"

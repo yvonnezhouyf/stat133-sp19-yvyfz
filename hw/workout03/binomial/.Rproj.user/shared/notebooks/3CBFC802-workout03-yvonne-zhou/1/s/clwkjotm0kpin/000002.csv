@@ -1,0 +1,6 @@
+"0","bin_distribution <- function(trials, prob) {"
+"0","  result = data.frame(0:trials, bin_probability(0:5, 5, prob))"
+"0","  names(result) = c(""success"", ""probabality"")"
+"0","  class(result) = c(""bindis"", ""data.frame"")"
+"0","  return(result)"
+"0","}"

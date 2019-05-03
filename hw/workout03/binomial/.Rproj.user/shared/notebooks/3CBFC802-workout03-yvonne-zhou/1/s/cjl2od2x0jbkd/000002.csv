@@ -1,0 +1,3 @@
+"0","plot.bincum <- function(df) {"
+"0","  plot(df$success, df$cumulative, xlab = ""success"", ylab = ""probability"", type = ""o"")"
+"0","}"

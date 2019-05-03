@@ -1,0 +1,92 @@
+
+check_trials <- function() {
+  
+}
+
+check_prob <- function() {
+  
+}
+
+check_successes <- function() {
+  
+}
+
+bin_choose <- function() {
+  
+}
+
+bin_var <- function() {
+  
+}
+
+bin_probability <- function() {
+  
+}
+
+print.binvar <- function() {
+  
+}
+
+summary.binvar <- function() {
+  
+}
+
+print.summary.binvar <- function() {
+  
+}
+
+bin_distribution <- function() {
+  
+}
+
+bin_cumulative <- function() {
+  
+}
+
+aux_mean <- function() {
+  
+}
+
+aux_variance <- function() {
+  
+}
+
+aux_mode <- function() {
+  
+}
+
+aux_skewness <- function() {
+  
+}
+
+aux_kurtosis <- function() {
+  
+}
+
+plot.bindis <- function() {
+  
+}
+
+plot.bincum <- function() {
+  
+}
+
+bin_mean <- function() {
+  
+}
+
+bin_variance <- function() {
+  
+}
+
+bin_mode <- function() {
+  
+}
+
+bin_skewness <- function() {
+  
+}
+
+bin_kurtosis <- function() {
+  
+}
