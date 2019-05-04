@@ -1,8 +1,0 @@
-"0","#' @export"
-"0","plot.bindis <- function(df) {"
-"0","  barplot(df$probability, xlab = ""successes"", ylab = ""probability"", names.arg = df$success)"
-"0","}"
-"0","#' @export"
-"0","plot.bincum <- function(df) {"
-"0","  plot(df$success, df$cumulative, xlab = ""successes"", ylab = ""probability"", type = ""o"")"
-"0","}"
