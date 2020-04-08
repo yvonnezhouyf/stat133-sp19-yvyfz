@@ -11,4 +11,4 @@ Repository for course assignments of Stat 133 (Spring 2019). This repository is 
 
 - [WORK-OUT 1](hw/workout01): GSW Shot Charts
 - [WORK-OUT 2](hw/workout02): Shiny App
-- [WORK-OUT 3](hw/workout03): R Package binomial
+- [WORK-OUT 3](hw/workout03/binomial): R Package binomial
